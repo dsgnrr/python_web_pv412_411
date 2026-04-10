@@ -1,4 +1,5 @@
-from functools import wraps, update_wrapper, partial, partialmethod
+from functools import wraps, update_wrapper, partial
+from types import MethodType
 
 def f_decorator(orig_func):
     @wraps(orig_func)
@@ -21,10 +22,7 @@ class obj_decorator:
     def __get__(self, instance, owner):
         if instance is None:
             return self
-        
-        updated_method = partial(self, instance)
-        update_wrapper(updated_method, self.orig_func)
-        return updated_method
+        return MethodType(self, instance)
     
     def __call__(self, *args, **kwds):
         print("obj_decorator")
@@ -52,17 +50,21 @@ s.method2()
 s.method2()
 s.method2()
 s.method2()
-# print(s.method2.call_count)
+print(s.method2.call_count)
+print(s.method2.__name__)
+help(s.method2)
 # s.method2.call_count
 # print(s.method2.call_count)
 
 
-# @obj_decorator
-# def sample_function():
-#     print("sample_function")
+@obj_decorator
+def sample_function():
+    print("sample_function")
     
-# sample_function()
-# print(sample_function.__name__)
+sample_function()
+sample_function()
+print(sample_function.__name__)
+print(sample_function.call_count)
 
 print('-'*10,'Class decorator', '-'*10)
 
