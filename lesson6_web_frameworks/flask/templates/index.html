@@ -1,0 +1,9 @@
+{% extends "_layout.html" %}
+
+{% block indexPage %}
+<h1>Main Page</h1>
+<h3>Hello, {{username}}</h3>
+
+<img src="{{url_for('static', filename='./assets/firefox.jpg')}}" alt='firefox.jpg'>
+{% endblock indexPage %}
+
