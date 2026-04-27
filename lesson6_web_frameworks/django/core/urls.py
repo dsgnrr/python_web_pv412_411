@@ -16,5 +16,8 @@ urlpatterns = [
     path('', views.index, name='homePage'),
     path('person/', views.get_person, kwargs={"name":'Tom', 'surname':'Due'} ,name='personPage'),
     path('product/<int:id>', views.get_product, name='productById'),
-    path('request/', views.get_request, name='requestInfo')
+    path('request/', views.get_request, name='requestInfo'),
+    path('post/', views.post_view, name='postView'),
+    path('json/', views.json_response, name="jsonView"),
+    path('products-json/', views.get_products_json, name="jsonProducts")
 ]
