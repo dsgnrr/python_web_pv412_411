@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpRequest
+from django.template.response import TemplateResponse
 
 import random
 
@@ -38,5 +39,9 @@ def index(request: HttpRequest):
     context['dict']= {"key1": "value1"}
     context['object']= Person('William', 'Butcher', 45)
     context['random'] = random.randint(-2,11)
+    context['empty_list'] = []
     
     return render(request, "index.html", context=context)
+
+def text_format(request: HttpRequest):
+    return TemplateResponse(request, 'text-format.html',{'list':[i for i in range(0,10)], 'dict':dict()})
