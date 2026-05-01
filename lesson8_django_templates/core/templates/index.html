@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            color: darkgreen;
+            text-align: center;
+        }
+
+        .welcome{
+            color:green;
+            font-family: sans-serif; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Django templates: Main Page</h1>
+    <h1 class="welcome">{{welcome_text}}</h1>
+    {{html_tag}}
+    {% comment "noise alert" %}
+
+    {% autoescape off %}
+    {{script_tag}}
+    {% endautoescape %}
+
+    {% endcomment %}
+    
+    <ul>
+        <li>Integer: {{int_value}}</li>
+        <li>Float: {{float_value}}</li>
+        <li>Boolean: {{bool_value}}</li>
+        <li>List: {{list}}</li>
+        <li>Dict: {{dict}}</li>
+        {% autoescape off %}
+        <li>Class instanse: {{object}}</li>
+        {% endautoescape %}
+    </ul>
+    <p>Person's name: {{object.name}}</p>
+    
+    <p>List item: {{list.2}}</p>
+    <p>Dict item: {{dict.key1}}</p>
+
+    {% if bool_value %}
+        <p> Condition is True </p>
+    {% else %}
+        <p> Condition is False </p>
+    {% endif %}
+
+    <h3> Random: {{random}}</h3>
+    {% if random < 0 %}
+        <p> Value less then 0 </p>
+    
+    {% elif random >= 0 and random < 5 %}
+        <p> Value in range 0-5 </p>
+
+    {% else %}
+        <p> Value greater then 5 </p>
+    {% endif %}
+
+</body>
+</html>
