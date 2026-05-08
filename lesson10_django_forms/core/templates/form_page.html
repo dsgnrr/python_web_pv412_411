@@ -1,0 +1,13 @@
+{% extends "_layout.html" %}
+
+{% block form_content %}
+<form>
+    {% csrf_token %}
+    <p> Name: </p>
+    <input type="text" name="name-field" placeholder="Enter name">
+    <p> Surname: </p>
+    <input type="text" name="surname-field" placeholder="Enter surname">
+    <button class="waves-effect waves-light btn indigo darken-4"><i class="material-icons left">login</i>Register</button>
+</form>
+{% endblock form_content %}
+
