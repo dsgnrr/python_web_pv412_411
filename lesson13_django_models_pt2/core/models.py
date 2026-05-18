@@ -30,6 +30,22 @@ class Category(models.Model):
     
     class Meta:
         db_table = "dj_categories"
+        
+class Tag(models.Model):
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+        return f"""
+    TagId: {self.id}
+    Name: {self.name}
+    """
+    
 
 class Product(models.Model):
     id = models.UUIDField(
@@ -48,6 +64,7 @@ class Product(models.Model):
     """ Relations """
     
     category = models.ForeignKey(Category, null=True, default=None, on_delete=models.CASCADE)
+    tags = models.ManyToManyField(Tag, blank=True, related_name='products')
     
     def __str__(self):
         return f"""
@@ -68,3 +85,52 @@ class Product(models.Model):
                 name = 'price_gt_zero'
             )
         ]
+        
+class Course(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    def __str__(self):
+        return f"""
+    CourseId: {self.id}
+    Name: {self.name}
+    """
+    
+class Student(models.Model):
+    name = models.CharField(max_length=150)
+    course = models.ManyToManyField(Course)
+    
+    def __str__(self):
+        return f"""
+    StudentId: {self.id}
+    Name: {self.name}
+    """
+
+''' Якщо необхідно додати свою інформацію у проміжну таблицю, використовуйте цей спосіб
+class Course_test(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    def __str__(self):
+        return f"""
+    CourseId: {self.id}
+    Name: {self.name}
+    """
+    
+class Student_test(models.Model):
+    name = models.CharField(max_length=150)
+    course = models.ManyToManyField(null=True, to=Course_test, through="CourseStudent")
+    
+    def __str__(self):
+        return f"""
+    StudentId: {self.id}
+    Name: {self.name}
+    """
+
+from django.utils.timezone import now
+class CourseStudent(models.Model):
+    student = models.ForeignKey(Student_test, on_delete=models.CASCADE)
+    course = models.ForeignKey(Course_test, on_delete=models.CASCADE)
+    created_at = models.DateField(
+        default=now
+    )
+    class Meta:
+        db_table="dj_studentxcourse"
+    
+'''
